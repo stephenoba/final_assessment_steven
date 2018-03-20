@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>cartoon/manga</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  var allQuestions = [{
+    question: "Who is the protagonist in the manga Naruto?",
+    choices: ["Neji", "Naruto", "Sasuke"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "What village is Naruto from?",
+    choices: ["Sand", "Leaf", "stone"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "What was the nick name of the fourth hukage?",
+    choices: ["flash", "the yellow flah", "Speed force"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "who is Naruto's teacher?",
+    choices: ["kakashi", "guy", "itachi"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "What tribe is sasuke from?",
+    choices: ["uzumaki", "konoha", "uchiha"],
+    correctAnswer: 2
+  },
+
+  {
+    question: "who doesn't belong to kakashi's team?",
+    choices: ["Jiraya", "Sakura", "Sasuke"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "What is Naruto's basic jutsu? ",
+    choices: ["shadow clone", "Rasengan", "chidori"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "Can you spell 80 in two letters?",
+    choices: ["yes", "It's not possible", "A-T"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "what is the name of Naruto's son?",
+    choices: ["kiba", "minato", "buruto"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "who was the first hukage?",
+    choices: ["jiraya", "Hashirama", "orochimaru"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "what is the name of the nine tail fox?",
+    choices: ["kurama", "biju", "gaara"],
+    correctAnswer: 0
+  },
+
+  {
+    question: "what is most popular with the uchiha clan?",
+    choices: ["chakra", "sharinga", "lightning"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "Who went against who in the last round of the chunin exams?",
+    choices: ["Neji vs Gaara", "Shikamaru vs Temari", "Naruto vs Kankuro"],
+    correctAnswer: 1
+  },
+
+  {
+    question: "What is the name of the Biju inside Gaara?",
+    choices: ["Nekomata", "Genbi", "Shukaku"],
+    correctAnswer: 2
+  },
+
+  {
+    question: "Which Akatsuki member killed Azuma?",
+    choices: ["Kakuzu", " Deidara", "Hidan"],
+    correctAnswer: 2
+  }
+];
+var currentquestion = 0;
+var correctAnswers = 0;
+
+function setupOptions() {
+  $('#question').html(parseInt(currentquestion) + 1 + ". " + allQuestions[currentquestion].question);
+  var options = allQuestions[currentquestion].choices;
+  var formHtml = '';
+  for (var i = 0; i < options.length; i++) {
+    formHtml += '<div><input type="radio" name="option" value="' + i + '" id="option' + i + '"><label for="option' + i + '">' +
+      allQuestions[currentquestion].choices[i] + '</label></div><br/>';
+  }
+  $('#form').html(formHtml);
+  $("#option0").prop('checked', true);
+};
+
+function checkAns() {
+  if ($("input[name=option]:checked").val() == allQuestions[currentquestion].correctAnswer) {
+    correctAnswers++;
+  };
+};
+
+$(document).ready(function() {
+
+  $(".jumbotron").hide();
+  $('#start').click(function() {
+    $(".jumbotron").fadeIn();
+    $(this).hide();
+  });
+
+  $(function() {
+    $("#progressbar").progressbar({
+      max: allQuestions.length - 1,
+      value: 0
+    });
+  });
+
+  setupOptions();
+
+  $("#next").click(function() {
+    event.preventDefault();
+    checkAns();
+    currentquestion++;
+    $(function() {
+      $("#progressbar").progressbar({
+        value: currentquestion
+      });
+    });
+    if (currentquestion < allQuestions.length) {
+      setupOptions();
+      if (currentquestion == allQuestions.length - 1) {
+        $('#next').html("Submit");
+        $('#next').click(function() {
+          $(".jumbotron").hide();
+          $("#result").html("You correctly answered " + correctAnswers + " out of " + currentquestion + " questions! ").hide();
+          $("#result").fadeIn(1500);
+        });
+
+      };
+
+    };
+  });
+});
+  </script>
+  <style>
+  body {
+      font: 20px Montserrat, sans-serif;
+      line-height: 1.8;
+      color: #f5f6f7;
+  }
+  p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+      background-color: #1abc9c; /* Green */
+      color: black;
+  }
+  .bg-4 { 
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
+  .container-fluid {
+      padding-top: 70px;
+      padding-bottom: 70px;
+  }
+  .navbar {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 12px;
+      letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  .border {
+      border-style: solid; 
+      border-width: thin; 
+      border-color: #1abc9c; 
+      border-radius: 50%; 
+      width:150px; 
+      height: 150px;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="home.html">Kwizz!</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><button type="button" class="btn btn-default">HOME</button></a></li>
+        <li><a href="#"><button type="button" class="btn btn-default">PLAY!</button></a></li>
+      </ul>
+    <div class="nav navbar-right">
+        <input class="form-control rounded-0 py-2" type="search" value="Find a Kwizz" id="example-search-input">
+    </div>
+    </div>
+  </div>
+</nav> 
+
+<!-- Container -->
+<div class="container-fluid bg-1 text-center">
+    <h1>Kwizz!</h1>
+    <h2>Naruto</h2>
+    <img src="image/naruto.png" alt="Naruto">
+<br/>
+<br/>
+<a href="#" id="start" class="btn btn-primary btn-lg">Let's Begin</a>
+<br/>
+<div class="well jumbotron">
+  <h3 id="question"></h3>
+  <br/><br/>
+  <form id="form">
+
+  </form>
+  <br/>
+  <a href="#" id="next" class="button">Next</a><br/>
+  <div id="progressbar" class="progress-bar progress-bar-striped"></div>
+</div>
+<div id="result"></div>
+</div>
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>Design by Stephen</p>
+</footer>
+
+</body>
+</html>
